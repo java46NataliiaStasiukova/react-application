@@ -6,12 +6,11 @@ import CoursesService from "./CoursesService";
 import courseData from "../config/courseData.json"
 
 export default class CoursesServiceArray implements CoursesService {
-    constructor(private _courses: any){
-    }
+    
     add(course: Course): void {
         const id = getRandomNumber(100000, 999999);
         course.id = id;
-        this._courses.push(course);
+        courses.push(course);
     }
     remove(id: number): void {
         //TODO
@@ -20,7 +19,7 @@ export default class CoursesServiceArray implements CoursesService {
         //TODO
     }
     get(): Course[] {
-        return this._courses;
+        return courses;
     }
     
 }

@@ -4,10 +4,6 @@ import courseData from "../../config/courseData.json"
 import { getRandomCourse } from "../../util/ramdomCourse";
 const Generation: React.FC = () =>
 {
-    //TODO
-    //input element for inputing number of the courses
-    //using method add of CoursesService (import variable coursesService)
-    //this component adds inputed number of the random courses
     function onClickButton(){
         const courses = document.querySelector('input')?.value
             if(courses !== undefined){
@@ -17,11 +13,9 @@ const Generation: React.FC = () =>
                 }
             }  
 }
-    return <><label style={{fontSize: 40}}>
-        Generation page is working
-        
-    </label>
-    <input type="number" id="number"  ></input>
-    <button onClick={onClickButton}>submit</button></>
+    return <><label style = {{marginTop: '5vh', display: 'flex', justifyContent: 'center'}}>
+    <div className="row">
+    <div className="col"><input type="number" id="number" className="form-control" min={1} max={10}></input></div>
+    <div className="col"><button type="button" className="btn btn-primary" onClick={onClickButton}>submit</button></div></div></label></>
 }
 export default Generation;

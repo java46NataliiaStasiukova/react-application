@@ -1,4 +1,3 @@
-import exp from "constants";
 import { ReactNode } from "react";
 import AddCourse from "../components/pages/AddCourse";
 import Courses from "../components/pages/Courses";

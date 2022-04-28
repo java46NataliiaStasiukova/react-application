@@ -10,8 +10,7 @@ const AddCourse: React.FC = () =>
     function onClickButton() {
         return coursesService.add(getRandomCourse(courseData))
     }
-    return <><label style={{ fontSize: 40 }}>
-        AddCourse page is working
-    </label><button onClick={onClickButton}>Add Course</button></>
+    return <><label style = {{marginTop: '5vh', display: 'flex', justifyContent: 'center'}}>
+    <button type="button" className="btn btn-primary" onClick={onClickButton}>Add Course</button></label></>
 }
 export default AddCourse;
