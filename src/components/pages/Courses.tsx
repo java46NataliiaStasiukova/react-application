@@ -1,8 +1,11 @@
 import React from "react";
-import { coursesService } from "../../config/service-config";
+import { useSelector } from "react-redux";
+import { Course } from "../../models/Course";
+import { StateType } from "../../redux/store";
 const Courses: React.FC = () =>
 {
-    const courses = coursesService.get();
+    const courses: Course[] = useSelector<StateType, Course[]>(state => state.courses);
+
     return <label style = {{marginTop: '5vh', display: 'flex', justifyContent: 'center'}}>
         <ul style={{fontSize: 15}}>
         {courses.map((c: any) => <li> {JSON.stringify(c)}</li>)}

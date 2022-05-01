@@ -1,14 +1,13 @@
 import React from "react";
-import { coursesService } from "../../config/service-config";
 import { getRandomCourse } from "../../util/ramdomCourse";
 import courseData from "../../config/courseData.json"
+import { useDispatch } from "react-redux";
+import { addCourse } from "../../redux/actions";
 const AddCourse: React.FC = () =>
 {
-    //TODO
-    //simple button "Add Course" triggering adding random course by using
-    //method add of CoursesService (variable courseService)
+    const dispatch = useDispatch();
     function onClickButton() {
-        return coursesService.add(getRandomCourse(courseData))
+        return dispatch(addCourse(getRandomCourse(courseData)))
     }
     return <><label style = {{marginTop: '5vh', display: 'flex', justifyContent: 'center'}}>
     <button type="button" className="btn btn-primary" onClick={onClickButton}>Add Course</button></label></>

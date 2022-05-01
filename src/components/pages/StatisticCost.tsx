@@ -1,8 +1,10 @@
 import React from "react";
-import { coursesService } from "../../config/service-config";
+import { useSelector } from "react-redux";
+import { Course } from "../../models/Course";
+import { StateType } from "../../redux/store";
 const StatisticCost: React.FC = () =>
 {
-    let courses = coursesService.get();
+    let courses: Course[] = useSelector<StateType, Course[]>(state => state.courses)
     const coursesCost = courses.map(c => c.cost)
     const max: number = Math.max(...coursesCost);
     const min: number = Math.min(...coursesCost);

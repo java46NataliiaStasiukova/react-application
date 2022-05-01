@@ -1,25 +1,34 @@
-import { courses } from "../config/service-config";
 import { Course } from "../models/Course";
-import { getRandomCourse } from "../util/ramdomCourse";
 import { getRandomNumber } from "../util/random";
 import CoursesService from "./CoursesService";
-import courseData from "../config/courseData.json"
 
 export default class CoursesServiceArray implements CoursesService {
-    
+    courses: Course[] = []
     add(course: Course): void {
         const id = getRandomNumber(100000, 999999);
         course.id = id;
-        courses.push(course);
+        this.courses.push(course);
     }
     remove(id: number): void {
-        //TODO
+        const index = this.getIndex(id);
+        this.courses.splice(index, 1);
+    }
+    private getIndex(id: number): number {
+        const index = this.courses.findIndex(c => c.id === id);
+        if (index < 0) {
+            throw `course with id ${id} doesn't exist`
+        }
+        return index;
     }
     update(id: number, course: Course): void {
-        //TODO
+        const index = this.getIndex(id);
+        if (id !== course.id) {
+            throw `No match of id ${id} with course.id ${course.id}`;
+        }
+        this.courses[index] = course;
     }
     get(): Course[] {
-        return courses;
+        return this.courses.slice();
     }
     
 }

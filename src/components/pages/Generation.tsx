@@ -1,15 +1,17 @@
 import React from "react";
-import { coursesService } from "../../config/service-config";
 import courseData from "../../config/courseData.json"
 import { getRandomCourse } from "../../util/ramdomCourse";
+import { useDispatch } from "react-redux";
+import { addCourse } from "../../redux/actions";
 const Generation: React.FC = () =>
 {
+    const dispatch = useDispatch();
     function onClickButton(){
         const courses = document.querySelector('input')?.value
             if(courses !== undefined){
                 const inputNum = +courses
                for(let i = 0; i < inputNum; i++){
-                coursesService.add(getRandomCourse(courseData))
+                dispatch(addCourse(getRandomCourse(courseData)))
                 }
             }  
 }
