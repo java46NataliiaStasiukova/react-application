@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { COURSES_PATH, ROUTES } from './config/routes-config';
-import Navigator from './components/navigators/navigator';
+import Navigator from './components/navigators/Navigator';
 import { useImitator } from './util/useImitator';
 
 const App: React.FC = () => {

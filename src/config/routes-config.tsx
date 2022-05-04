@@ -20,7 +20,7 @@ export const ROUTES:RouteType[] = [
     {path: STATISTIC_HOURS_PATH, label: 'Statistics Hourse', element: <StatisticHours/>},
     {path: STATISTIC_COST_PATH, label: 'Statistics Cost', element: <StatisticCost/>},
     {path: LOGIN_PATH, label: 'Login', element: <Login/>},
-    {path: LOGOUT_PATH, label: 'logout', element: <Logout/>},
+    {path: LOGOUT_PATH, label: 'Logout', element: <Logout/>},
     {path: GENERATION_PATH, label: 'Generation', element: <Generation/>}
     
 ]

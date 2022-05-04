@@ -7,17 +7,16 @@ import { getRandomNumber } from "./random";
 import { Course } from "../models/Course";
 import { useEffect } from "react";
 import { StateType } from "../redux/store";
-
+let courses: Course[];
 export function useImitator() {
     const dispatch = useDispatch();
-    const courses: Course[] = useSelector<StateType, Course[]>(state => state.courses);
+    courses = useSelector<StateType, Course[]>(state => state.courses);
     useEffect(() => {
         const intervalId = setInterval(action, 2000);
         return () => clearInterval(intervalId)
     }, [])
     function action() {
         const number = getRandomNumber(1,100);
-        console.log(number)
         const imitatorAction: ImitatorAction = getAction(number);
         switch(imitatorAction.action) {
             case 'add': dispatchAdd(); break;
@@ -32,8 +31,7 @@ export function useImitator() {
     function dispatchRemove(courses: Course[]) {
         if(courses.length > 0){
         const randomIndex: number = getRandomNumber(0, courses.length);
-        const courseId = courses[randomIndex].id;
-        dispatch(removeCourse(courseId));
+        dispatch(removeCourse(courses[randomIndex].id));
         }
     }
     function dispatchUpdate(courses: Course[]) {

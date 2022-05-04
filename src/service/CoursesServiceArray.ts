@@ -12,7 +12,6 @@ export default class CoursesServiceArray implements CoursesService {
     remove(id: number): void {
         const index = this.getIndex(id);
         this.courses.splice(index, 1);
-        console.log(`delited course ${id}`)
     }
     private getIndex(id: number): number {
         const index = this.courses.findIndex(c => c.id === id);
@@ -26,7 +25,6 @@ export default class CoursesServiceArray implements CoursesService {
         if (id !== course.id) {
             throw `No match of id ${id} with course.id ${course.id}`;
         }
-        console.log(`updated course ${course.id}`)
         this.courses[index] = course;
     }
     get(): Course[] {

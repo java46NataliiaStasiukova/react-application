@@ -9,7 +9,7 @@ const AddCourse: React.FC = () =>
     function onClickButton() {
         return dispatch(addCourse(getRandomCourse(courseData)))
     }
-    return <><label style = {{marginTop: '5vh', display: 'flex', justifyContent: 'center'}}>
+    return <><label style = {{marginTop: '13vh', display: 'flex', justifyContent: 'center'}}>
     <button type="button" className="btn btn-primary" onClick={onClickButton}>Add Course</button></label></>
 }
 export default AddCourse;
