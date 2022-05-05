@@ -1,3 +1,4 @@
+import { textAlign } from "@mui/system";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Course } from "../../models/Course";
@@ -9,10 +10,10 @@ const StatisticCost: React.FC = () =>
     const statistic = getStatistic(courses, 'cost');
     
     return <><label style = {{marginTop: '13vh', display: 'flex', justifyContent: 'center'}}>
-    <div className="row">
-    <label style={{display: 'flex', justifyContent: 'center'}}>Maximal Cost {statistic.max}</label>
-    <label style={{display: 'flex', justifyContent: 'center'}}>Minimal Cost {statistic.min}</label>
-    <label style={{display: 'flex', justifyContent: 'center'}}>Average Cost {statistic.average}</label>
+    <div className="row" style={{display: 'flex', justifyContent: 'center', marginLeft: '30vw'}}>
+    <label>Maximal Cost {statistic.max}</label>
+    <label>Minimal Cost {statistic.min}</label>
+    <label>Average Cost {statistic.average}</label>
     </div></label>
     </>
 }
