@@ -25,7 +25,7 @@ export const GENERATION_PATH = '/generation';
 export const ROUTES:RouteType[] = [
     {path: COURSES_PATH, label: 'Courses', element: <Courses/>, icon: <PlaylistAddCheckIcon/>},
     {path: ADD_COURSE_PATH, label: 'New Course', element: <AddCourse/>, icon: <PlaylistAddIcon/>},
-    {path: STATISTIC_HOURS_PATH, label: 'Statistics Hourse', element: <StatisticHours/>, icon: <QueryBuilderIcon/>},
+    {path: STATISTIC_HOURS_PATH, label: 'Statistics Hours', element: <StatisticHours/>, icon: <QueryBuilderIcon/>},
     {path: STATISTIC_COST_PATH, label: 'Statistics Cost', element: <StatisticCost/>, icon: <AttachMoneyIcon/>},
     {path: LOGIN_PATH, label: 'Login', element: <Login/> ,icon: <LoginIcon/>},
     {path: LOGOUT_PATH, label: 'Logout', element: <Logout/>, icon: <LogoutIcon/>},
