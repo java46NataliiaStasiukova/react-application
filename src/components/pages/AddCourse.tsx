@@ -1,6 +1,4 @@
 import React from "react";
-import { getRandomCourse } from "../../util/ramdomCourse";
-import courseData from "../../config/courseData.json"
 import { useDispatch } from "react-redux";
 import { addCourse } from "../../redux/actions";
 import CourseForm from "../forms/CourseForm";

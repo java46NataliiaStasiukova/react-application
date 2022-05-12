@@ -8,15 +8,16 @@ type Props = {
 }
 const initialCourse: Course = createCourse(0, "", "", 0, 0, new Date());
 const CourseForm: React.FC<Props> = ({ submitFn }) => {
-    const {courses, lectors, minHours, maxHours, minCost, maxCost} = courseData;
+    const {courses, lectors, minHours, maxHours, minCost, maxCost, minYear, maxYear} = courseData;
     const [course, setCourse] = React.useState(initialCourse);
 
+function onReset(event: any){
+    setCourse(initialCourse)
+}
 function onSubmit(event: any) {
     event.preventDefault();
      submitFn(course);
-}
-function onReset(event: any){
-    setCourse(initialCourse)
+     onReset(event);
 }
 function handlerCourse(event: any) {
    const courseCopy = {...course};
@@ -40,7 +41,7 @@ function handlerCost(event: any) {
 }
 function handlerDate(event: any) {
     const courseCopy = {...course};
-    courseCopy.openingDate = event.target.value;
+    courseCopy.openingDate = event.target.value;// = new Date(event.target.value);
     setCourse(courseCopy);
 }
     return <form onSubmit={onSubmit} onReset={onReset}>
@@ -103,6 +104,7 @@ function handlerDate(event: any) {
             <Grid item xs={12} sm={12} style={{paddingLeft: "15vw", paddingRight: "15vw", paddingTop: "2vh"}}>     
                 <TextField id="date" label="Course Date" type="date" fullWidth required 
                 onChange={handlerDate}
+                InputProps={{inputProps: {min: minYear+"-01-01", max: maxYear+"-12-31"}}}
                 InputLabelProps={{
                 shrink: true,
                 }}/>
