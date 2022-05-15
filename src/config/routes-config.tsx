@@ -17,6 +17,7 @@ import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 //
 export const COURSES_PATH = '/';
 export const ADD_COURSE_PATH = '/course/add';
+//export const UPDATE_COURSE_PATH = '/course/update'
 export const STATISTIC_HOURS_PATH = '/statistic/hours';
 export const STATISTIC_COST_PATH = '/statistic/cost';
 export const LOGIN_PATH = '/login';

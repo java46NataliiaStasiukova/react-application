@@ -1,28 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Course, createCourse } from "../../models/Course";
 import courseData from "../../config/courseData.json";
 import { Grid, Select, TextField, FormControl, InputLabel, MenuItem, Button } from "@mui/material";
+import { updateCourse } from "../../redux/actions";
 
 type Props = {
     submitFn: (course: Course) => void;
+    editingCourse?: Course;
 }
-const initialCourse: Course = createCourse(0, "", "", 0, 0, new Date());
-const CourseForm: React.FC<Props> = ({ submitFn }) => {
-    const {courses, lectors, minHours, maxHours, minCost, maxCost, minYear, maxYear} = courseData;
-    const [course, setCourse] = React.useState(initialCourse);
+let initialCourse: Course = createCourse(0, "", "", 0, 0, new Date());
 
+const CourseForm: React.FC<Props> = ({ submitFn, editingCourse }) => {
+    const {courses, lectors, minHours, maxHours, minCost, maxCost, minYear, maxYear} = courseData;
+    //const updateCourse = editingCourse ? true : false;//
+    const [course, setCourse] = React.useState(editingCourse || initialCourse);
+console.log(course.openingDate)//
 function onReset(event: any){
-    setCourse(initialCourse)
+    setCourse(editingCourse || initialCourse)
 }
 function onSubmit(event: any) {
     event.preventDefault();
-     submitFn(course);
-     onReset(event);
+    submitFn(course);
+     //onReset(event);
+     document.querySelector('form')?.reset()//if null => do not call reset()
+     //without ! or ? => will be error
+
 }
 function handlerCourse(event: any) {
+   if(!editingCourse){
    const courseCopy = {...course};
    courseCopy.name = event.target.value;
    setCourse(courseCopy);
+   }
 }
 function handlerLecturer(event: any) {
     const courseCopy = {...course};
@@ -41,7 +50,7 @@ function handlerCost(event: any) {
 }
 function handlerDate(event: any) {
     const courseCopy = {...course};
-    courseCopy.openingDate = event.target.value;// = new Date(event.target.value);
+    courseCopy.openingDate = new Date(event.target.value);//event.target.value;
     setCourse(courseCopy);
 }
     return <form onSubmit={onSubmit} onReset={onReset}>
@@ -102,7 +111,7 @@ function handlerDate(event: any) {
             </Grid>
 
             <Grid item xs={12} sm={12} style={{paddingLeft: "15vw", paddingRight: "15vw", paddingTop: "2vh"}}>     
-                <TextField id="date" label="Course Date" type="date" fullWidth required 
+                <TextField id="date" label="Course Date" type="date" fullWidth required value={editingCourse && JSON.stringify(course.openingDate).substring(1, 11)} 
                 onChange={handlerDate}
                 InputProps={{inputProps: {min: minYear+"-01-01", max: maxYear+"-12-31"}}}
                 InputLabelProps={{
@@ -126,3 +135,5 @@ export default CourseForm;
 function getCourseItems(courses: string[]): React.ReactNode {
     return courses.map(c => <MenuItem value={c} key={c}>{c}</MenuItem>)
 }
+
+
