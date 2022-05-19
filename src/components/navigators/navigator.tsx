@@ -13,4 +13,3 @@ const Navigator: React.FC<{items:RouteType[]}> = ({items}) => {
     </Box>
 }
 export default Navigator;
-//

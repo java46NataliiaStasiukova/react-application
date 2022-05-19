@@ -1,37 +1,27 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Course, createCourse } from "../../models/Course";
 import courseData from "../../config/courseData.json";
 import { Grid, Select, TextField, FormControl, InputLabel, MenuItem, Button } from "@mui/material";
-import { updateCourse } from "../../redux/actions";
-
 type Props = {
     submitFn: (course: Course) => void;
     editingCourse?: Course;
 }
-let initialCourse: Course = createCourse(0, "", "", 0, 0, new Date());
-
-const CourseForm: React.FC<Props> = ({ submitFn, editingCourse }) => {
+let initialCourse: Course = createCourse(0, "", "", 0, 0, new Date("00-00-0000"));
+const CourseForm: React.FC<Props> = ({ submitFn, editingCourse}) => {
     const {courses, lectors, minHours, maxHours, minCost, maxCost, minYear, maxYear} = courseData;
-    //const updateCourse = editingCourse ? true : false;//
     const [course, setCourse] = React.useState(editingCourse || initialCourse);
-console.log(course.openingDate)//
 function onReset(event: any){
     setCourse(editingCourse || initialCourse)
 }
 function onSubmit(event: any) {
     event.preventDefault();
     submitFn(course);
-     //onReset(event);
-     document.querySelector('form')?.reset()//if null => do not call reset()
-     //without ! or ? => will be error
-
+    document.querySelector('form')?.reset()//if null => do not call reset(); without ! or ? => will be error
 }
 function handlerCourse(event: any) {
-   if(!editingCourse){
    const courseCopy = {...course};
    courseCopy.name = event.target.value;
    setCourse(courseCopy);
-   }
 }
 function handlerLecturer(event: any) {
     const courseCopy = {...course};
@@ -50,14 +40,15 @@ function handlerCost(event: any) {
 }
 function handlerDate(event: any) {
     const courseCopy = {...course};
-    courseCopy.openingDate = new Date(event.target.value);//event.target.value;
+    courseCopy.openingDate = new Date(event.target.value);
     setCourse(courseCopy);
 }
     return <form onSubmit={onSubmit} onReset={onReset}>
+         <Grid item xs={12} sm={12} style={{padding: "1vw", justifyContent: "center"}}><h4>{editingCourse ? "Edit Course" : "Create New Course"}</h4></Grid>
         <Grid container style={{paddingLeft: "10vw", paddingRight: "10vw"}}>
+       
 
-
-            <Grid item xs={12} sm={6} style={{padding: "1vw"}}>
+            <Grid item xs={12} sm={6} style={{padding: "1vw"}} >
                 <FormControl fullWidth required>
                     <InputLabel id="course-select-label">Course Name</InputLabel>
                     <Select
@@ -66,6 +57,9 @@ function handlerDate(event: any) {
                         label="Course Name"
                         value={course.name}
                         onChange={handlerCourse}
+                        inputProps={
+                            { readOnly: !!editingCourse }
+                        }
                     >
                         <MenuItem value="">None</MenuItem>
                        {getCourseItems(courses)}
@@ -111,7 +105,8 @@ function handlerDate(event: any) {
             </Grid>
 
             <Grid item xs={12} sm={12} style={{paddingLeft: "15vw", paddingRight: "15vw", paddingTop: "2vh"}}>     
-                <TextField id="date" label="Course Date" type="date" fullWidth required value={editingCourse && JSON.stringify(course.openingDate).substring(1, 11)} 
+                <TextField id="date" label={"Opening Date"} type="date" fullWidth required 
+                value={editingCourse && getIsoDate(course.openingDate)}
                 onChange={handlerDate}
                 InputProps={{inputProps: {min: minYear+"-01-01", max: maxYear+"-12-31"}}}
                 InputLabelProps={{
@@ -124,7 +119,7 @@ function handlerDate(event: any) {
                 <Button type="submit">Submit</Button>
             </Grid>
             <Grid item xs={6} sm={6} style={{paddingTop: "1vw"}}>
-                <Button type="reset">Reset</Button>
+                <Button type="reset">{editingCourse ? 'Cancel' : 'Reset'}</Button>
             </Grid>
 
         </Grid>
@@ -135,5 +130,14 @@ export default CourseForm;
 function getCourseItems(courses: string[]): React.ReactNode {
     return courses.map(c => <MenuItem value={c} key={c}>{c}</MenuItem>)
 }
+function getIsoDate(dateValue: Date): string {
+    const day = dateValue.getDate() + 1;
+    const month = dateValue.getMonth();
+    const year = dateValue.getFullYear();
+    const dateUTC = new Date(year, month, day);
+    return dateUTC.toISOString().substring(0, 10);
+
+}
+
 
 

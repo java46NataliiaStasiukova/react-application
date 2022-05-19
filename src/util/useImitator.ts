@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ImitatorAction, imitatorActions } from "../config/imitatir-config";
+import { ImitatorAction, imitatorActions } from "../config/imitator-config";
 import { addCourse, removeCourse, updateCourse } from "../redux/actions";
 import { getRandomCourse } from "./ramdomCourse";
 import courseData from "../config/courseData.json"
