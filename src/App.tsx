@@ -1,24 +1,35 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { COURSES_PATH, ROUTES } from './config/routes-config';
 import Navigator from './components/navigators/Navigator';
-import { useImitator } from './util/useImitator';
+//import { useImitator } from './util/useImitator';
+import { useSelector } from 'react-redux';
+import { ClientData } from './models/ClientData';
+import { StateType } from './redux/store';
+import { RouteType } from './models/RouteType';
 
 const App: React.FC = () => {
+  const clientData: ClientData = useSelector<StateType, ClientData>(state=>state.clientData);
   //useImitator();
   const [flNavigate, setFlNavigate] = React.useState<boolean>(true);
+  const relevantItems: RouteType[] = React.useMemo<RouteType[]>(() => getRelevantItems(clientData), [clientData]);
   React.useEffect(() => setFlNavigate(false), [])
 return <BrowserRouter>
-<Navigator items={ROUTES}/>
-{flNavigate && <Navigate to={COURSES_PATH}></Navigate>}
+<Navigator items={relevantItems}/>
+{flNavigate && clientData.email && <Navigate to={COURSES_PATH}></Navigate>}
 <Routes>
-{getRoutes()}
+{getRoutes(relevantItems)}
 </Routes>
 </BrowserRouter>
 }
-
 export default App;
-function getRoutes(): React.ReactNode {
-  return ROUTES.map(r => <Route key={r.path} path={r.path} element={r.element}/>)
+function getRoutes(relevantItems: RouteType[]): React.ReactNode {
+  return relevantItems.map(r => <Route key={r.path} path={r.path} element={r.element}/>)
+}
+
+function getRelevantItems(clientData: ClientData): RouteType[] {
+  //TODO for admin
+  return ROUTES.filter(r => (!!clientData.email && clientData.isAdmin && r.authenticated) || 
+  (!!clientData.email && !clientData.isAdmin && r.userAccess) || (!clientData.email && !r.authenticated))
 }
 

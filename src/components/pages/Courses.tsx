@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Course } from "../../models/Course";
 import { StateType } from "../../redux/store";
@@ -9,6 +9,7 @@ import { removeCourse, updateCourse } from "../../redux/actions";
 import CourseForm from "../forms/CourseForm";
 import ActionConfirmation from "../dialogs/ActionConfirmation";
 import ConfirmationData from "../../models/ConfirmationData";
+import { ClientData } from "../../models/ClientData";
 let md: boolean;
 let lg: boolean;
 function getActions(actionsFn: (params: GridRowParams)=>JSX.Element[]): GridColumns {
@@ -35,6 +36,7 @@ const style = {
     p: 4,
   };
 const Courses: React.FC = () => {
+    const clientData: ClientData = useSelector<StateType, ClientData>(state=>state.clientData);
     let course: any = React.useRef<Course>();
     const dispatch = useDispatch()
     const courses: Course[] = useSelector<StateType, Course[]>(state => state.courses);
@@ -46,10 +48,10 @@ const Courses: React.FC = () => {
         md = useMediaQuery('(min-width: 600px)')
         lg = useMediaQuery('(min-width: 900px)')
     function actionsFn(params: GridRowParams): JSX.Element[] {
-        const actionElements: JSX.Element[] = [
-            <GridActionsCellItem label="Remove" onClick={() => showRemoveConfirmation(params.id as number)}
+        const actionElements: JSX.Element[] = [                     
+            <GridActionsCellItem label="Remove" hidden={!clientData.isAdmin} onClick={() => showRemoveConfirmation(params.id as number)}
              icon={<Delete/>}/>,
-             <GridActionsCellItem label="Edit" onClick={() => editFn(params.id as number)} icon={<Edit/>}/>,
+             <GridActionsCellItem label="Edit" hidden={!clientData.isAdmin} onClick={() => editFn(params.id as number)} icon={<Edit/>} />,
              <GridActionsCellItem label="Details" icon={<Visibility/>} 
              onClick={showDetails.bind(undefined, params.id as number)}/>
         ]
@@ -90,7 +92,6 @@ const Courses: React.FC = () => {
     }
     const getActionsCallback = useCallback(getActions, [courses]);
     const columns = getActionsCallback(actionsFn);
-    console.log(courses)
 
     return <Box sx={{display: 'flex', justifyContent: 'center' }}><Paper sx={{height: {xs: '70vh', sm: '85vh', md: '80vh'}, width: {xs: '100%', md: '80%'}}}>
         {isEdit ? <CourseForm submitFn={(course: Course) => {setEdit(false); showUpdateConfirmation(course)}} 
