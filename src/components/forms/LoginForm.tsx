@@ -12,7 +12,8 @@ const LoginForm: React.FC<Props> = ({submitFn}) => {
     function onLogin() {
         const loginEmail: string = inputEmail.value;
         const loginPassword: string = InputPassword.value;
-        submitFn({email: loginEmail, password: loginPassword});
+        const res = submitFn({email: loginEmail, password: loginPassword});
+        console.log(res)
     }
     React.useEffect(()=>{
         inputEmail = document.getElementById("email")

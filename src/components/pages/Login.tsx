@@ -13,7 +13,7 @@ const autService = new AuthServiceClient();
     const dispatch = useDispatch();
     return <LoginForm submitFn={function(loginData: LoginData): void{
         const clientData = autService.login(loginData);
-        console.log(clientData)//////
+        if(!clientData) alert("Email or passwor not correct");
         if(!!clientData){
             dispatch(authAction(clientData as ClientData))
         }
