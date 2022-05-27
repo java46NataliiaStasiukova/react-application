@@ -3,20 +3,19 @@ import { Reducer } from "react";
 import { coursesService } from "../config/service-config";
 import { ClientData, emptyClientData } from "../models/ClientData";
 import { Course } from "../models/Course";
-import { ADD_COURSE_ACTION, AUTH_ACTION, REMOVE_COURSE_ACTION, UPDATE_COURSE_ACTION } from "./actions";
-
-export const coursesReducer: Reducer<Course[], PayloadAction<Course | number>> = 
-(courses = [], action):Course[] => {
-    switch(action.type){
-        case ADD_COURSE_ACTION: coursesService.add(action.payload as Course); break;
-        case REMOVE_COURSE_ACTION: coursesService.remove(action.payload as number); break;
-        case UPDATE_COURSE_ACTION: const course: Course = action.payload as Course;
-                    coursesService.update(course.id, course); break;
-        default: return courses;
-    }
-    return coursesService.get();
+import {  AUTH_ACTION, SET_COURSES_ACTION} from "./actions";
+export const CLIENT_DATA_ITEM = "client-data"
+export const coursesReducer:Reducer<Course[], PayloadAction<Course[]>> =
+ (courses = [], action):Course[] => {
+     return action.type === SET_COURSES_ACTION ? action.payload : courses;
 }
-export const clientDataReducer: Reducer<ClientData, PayloadAction<ClientData>> =
-(clientData = emptyClientData, action): ClientData => {
-    return action.type === AUTH_ACTION ? action.payload : clientData;
+export const clientDataReducer: Reducer<ClientData, PayloadAction<ClientData>> = 
+(clientData = localStorage.getItem(CLIENT_DATA_ITEM)?
+ JSON.parse(localStorage.getItem(CLIENT_DATA_ITEM) as string) : emptyClientData, action): ClientData => {
+   
+    if (action.type === AUTH_ACTION) {
+        localStorage.setItem(CLIENT_DATA_ITEM, JSON.stringify(action.payload));
+        return action.payload;
+    }
+    return clientData;
 }

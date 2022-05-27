@@ -3,15 +3,19 @@ import courseData from "../../config/courseData.json"
 import { getRandomCourse } from "../../util/ramdomCourse";
 import { useDispatch } from "react-redux";
 import { addCourse } from "../../redux/actions";
+import { useNavigate } from "react-router-dom";
+import { COURSES_PATH } from "../../config/routes-config";
 const Generation: React.FC = () =>
 {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
+    const navigate = useNavigate();
     function onClickButton(){
         const courses = document.querySelector('input')?.value
             if(courses !== undefined){
                 const inputNum = +courses
                for(let i = 0; i < inputNum; i++){
                 dispatch(addCourse(getRandomCourse(courseData)))
+                navigate(COURSES_PATH);
                 }
             }  
 }

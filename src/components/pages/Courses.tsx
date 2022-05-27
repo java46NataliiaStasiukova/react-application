@@ -10,6 +10,7 @@ import CourseForm from "../forms/CourseForm";
 import ActionConfirmation from "../dialogs/ActionConfirmation";
 import ConfirmationData from "../../models/ConfirmationData";
 import { ClientData } from "../../models/ClientData";
+import CoursesRest from "../../service/CoursesRest";
 let md: boolean;
 let lg: boolean;
 function getActions(actionsFn: (params: GridRowParams)=>JSX.Element[]): GridColumns {
@@ -38,8 +39,8 @@ const style = {
 const Courses: React.FC = () => {
     const clientData: ClientData = useSelector<StateType, ClientData>(state=>state.clientData);
     let course: any = React.useRef<Course>();
-    const dispatch = useDispatch()
-    const courses: Course[] = useSelector<StateType, Course[]>(state => state.courses);
+    const dispatch = useDispatch<any>()
+    const courses: Course[] = useSelector<StateType, Course[]>(state => state.courses);//////
     const [isEdit, setEdit] = React.useState(false);
     const [flagOpen, setFlagOpen] = React.useState<boolean>(false);
     const confirmationData = React.useRef<ConfirmationData>({title: '', content: '', confirmHandler: () => {}});

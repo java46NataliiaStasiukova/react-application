@@ -7,14 +7,16 @@ import { getRandomNumber } from "./random";
 import { Course } from "../models/Course";
 import { useEffect } from "react";
 import { StateType } from "../redux/store";
+   
 let courses: Course[];
 export function useImitator() {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
     courses = useSelector<StateType, Course[]>(state => state.courses);
     useEffect(() => {
         const intervalId = setInterval(action, 2000);
         return () => clearInterval(intervalId)
     }, [])
+
     function action() {
         const number = getRandomNumber(1,100);
         const imitatorAction: ImitatorAction = getAction(number);
@@ -25,6 +27,7 @@ export function useImitator() {
             default: break;
         }
     }
+    
     function dispatchAdd() {
         dispatch(addCourse(getRandomCourse(courseData)));
     }
@@ -43,6 +46,7 @@ export function useImitator() {
         }
     }
 }
+
 function getAction(num: number): ImitatorAction {
     return imitatorActions.find(ia => num <= ia.prob) ?? imitatorActions[imitatorActions.length - 1]
  }
