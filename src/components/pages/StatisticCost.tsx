@@ -3,13 +3,23 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Course } from "../../models/Course";
 import { StateType } from "../../redux/store";
-import { getStatistic } from "../../util/functions";
+//import { getStatistic } from "../../util/functions";
+import Statistics from "../statistics/Statistics";
+import courseData from "../../config/courseData.json"
+
 const StatisticCost: React.FC = () =>
 {
     let courses: Course[] = useSelector<StateType, Course[]>(state => state.courses);  
-    const statistic = getStatistic(courses, 'cost');
+    //const statistic = getStatistic(courses, 'cost');
     
-    return <><label style = {{marginTop: '13vh', display: 'flex', justifyContent: 'center'}}>
+    return <Statistics field={"cost"} title={"Courses Cost Statistics"} unit={"ILS"}
+     intervals={(courseData as any).costIntervals} objects={courses}></Statistics>
+}
+export default StatisticCost;
+
+
+/**
+ *     return <><label style = {{marginTop: '13vh', display: 'flex', justifyContent: 'center'}}>
     <div className="row" style={{display: 'flex', justifyContent: 'center', marginLeft: '30vw'}}>
     <label>Maximal Cost {statistic.max}</label>
     <label>Minimal Cost {statistic.min}</label>
@@ -17,6 +27,4 @@ const StatisticCost: React.FC = () =>
     </div></label>
     </>
 }
-export default StatisticCost;
-
-
+ */

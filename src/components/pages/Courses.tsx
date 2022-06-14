@@ -10,7 +10,7 @@ import CourseForm from "../forms/CourseForm";
 import ActionConfirmation from "../dialogs/ActionConfirmation";
 import ConfirmationData from "../../models/ConfirmationData";
 import { ClientData } from "../../models/ClientData";
-import CoursesRest from "../../service/CoursesRest";
+
 let md: boolean;
 let lg: boolean;
 function getActions(actionsFn: (params: GridRowParams)=>JSX.Element[]): GridColumns {
@@ -86,8 +86,9 @@ const Courses: React.FC = () => {
     }
     function updateAction(course: Course, flConfirm: boolean): void{
         if(flConfirm){
-            console.log(course);
             dispatch(updateCourse(course));
+            //dispatch(authAction(clientData as ClientData))
+            //dispatch(setOperationCode(OperationCode.OK))
         }
         setFlagOpen(false);
     }

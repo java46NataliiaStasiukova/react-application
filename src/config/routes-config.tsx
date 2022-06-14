@@ -14,6 +14,7 @@ import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+import ErrorAlert from "../components/dialogs/ErrorAlert";
 //
 export const COURSES_PATH = '/';
 export const ADD_COURSE_PATH = '/course/add';

@@ -5,12 +5,17 @@ import { Grid, Select, TextField, FormControl, InputLabel, MenuItem, Button } fr
 type Props = {
     submitFn: (course: Course) => void;
     editingCourse?: Course;
+
 }
 let initialCourse: Course = createCourse(0, "", "", 0, 0, new Date("00-00-0000"));
 const CourseForm: React.FC<Props> = ({ submitFn, editingCourse}) => {
     const {courses, lectors, minHours, maxHours, minCost, maxCost, minYear, maxYear} = courseData;
     const [course, setCourse] = React.useState(editingCourse || initialCourse);
 function onReset(event: any){
+    if(course === editingCourse){
+        ////////////////
+
+    }
     setCourse(editingCourse || initialCourse)
 }
 function onSubmit(event: any) {
@@ -130,6 +135,7 @@ export default CourseForm;
 function getCourseItems(courses: string[]): React.ReactNode {
     return courses.map(c => <MenuItem value={c} key={c}>{c}</MenuItem>)
 }
+/*
 function getIsoDate(dateValue: Date): string {
     const day = dateValue.getDate() + 1;
     const month = dateValue.getMonth();
@@ -137,6 +143,12 @@ function getIsoDate(dateValue: Date): string {
     const dateUTC = new Date(year, month, day);
     return dateUTC.toISOString().substring(0, 10);
 
+}
+*/
+function getIsoDate(date: Date) : string{ // returns local date as YYYY-MM-DD
+    const offset: number  = date.getTimezoneOffset()
+		date = new Date(date.getTime() - (offset*60*1000))
+		return date.toISOString().split('T')[0]
 }
 
 

@@ -1,3 +1,4 @@
+
 import { ClientData } from "../models/ClientData";
 import LoginData from "../models/LoginData";
 import AuthService from "./AuthService";
@@ -25,7 +26,7 @@ async function getClientData(response: Response): Promise<ClientData> {
 }
 async function getJwtPayload(response: Response): Promise<any> {
     const loginResponse = await response.json();
-    const authToken: string = loginResponse.accessToken;
+    const authToken: string = loginResponse.accessToken;//xxx.xxx.xxx
     localStorage.setItem(AUTH_TOKEN_ITEM, authToken);
     const rowPayload = authToken.split('.')[1];
     const payloadJson = atob(rowPayload);
